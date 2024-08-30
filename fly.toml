@@ -1,0 +1,21 @@
+# fly.toml app configuration file generated for anchor on 2024-08-30T15:34:12-04:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'anchor'
+primary_region = 'ewr'
+
+[build]
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+
+[[services]]
+  internal_port = 43385
+  protocol = "tcp"
+
+  [[services.ports]]
+    port = "43385"

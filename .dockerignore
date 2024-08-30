@@ -1,0 +1,6 @@
+# flyctl launch added from .gitignore
+**/.env
+**/stats.json
+**/*.log
+**/.screenrc
+fly.toml
