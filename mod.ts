@@ -2,6 +2,8 @@ import { writeAll } from "https://deno.land/std@0.208.0/streams/write_all.ts";
 import { readLines } from "https://deno.land/std@0.208.0/io/read_lines.ts";
 import { encodeHex } from "https://deno.land/std@0.208.0/encoding/hex.ts";
 
+const PERSIST_STATS = false;
+
 const decoder = new TextDecoder();
 const encoder = new TextEncoder();
 
@@ -84,6 +86,11 @@ class Server {
   }
 
   async parseStats() {
+    if (!PERSIST_STATS) {
+      this.stats.pid = Deno.pid;
+      return;
+    }
+
     try {
       const statsString = await Deno.readTextFile("./stats.json");
       this.stats = Object.assign(this.stats, JSON.parse(statsString));
@@ -126,6 +133,10 @@ class Server {
   }
 
   async saveStats() {
+    if (!PERSIST_STATS) {
+      return;
+    }
+    
     try {
       await Deno.writeTextFile(
         "./stats.json",
